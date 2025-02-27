@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodMates - Donor Registration</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts (Poppins for modern, unique typography) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Particle.js for background particles (open-source) -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/fav.png" type="image/x-icon">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Custom Color Scheme: Vibrant Red (#e41e3d), White, Gradient Backgrounds */
+        :root {
+            --primary-color: #e41e3d; /* Vibrant red for buttons, headers */
+            --secondary-color: #f5f5f5; /* Light gray background */
+            --text-color: #333; /* Dark gray text */
+            --hover-color: #d11932; /* Darker red for hover effects */
+            --gradient-bg: linear-gradient(135deg, #e41e3d, #ff6b6b); /* Gradient for modern look */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Modern, unique font */
+            background: var(--secondary-color);
+            color: var(--text-color);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--secondary-color);
+        }
+
+        /* Loader Section */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1s ease-in-out 2s forwards;
+        }
+
+        #loader .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--primary-color);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        /* Registration Form - Attractive, Animated, and 3D */
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.15), 0 0 15px rgba(228, 30, 61, 0.2);
+            margin: 50px auto;
+            max-width: 500px;
+            transform-style: preserve-3d;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+
+        .container:hover {
+            transform: translateY(-10px) rotateX(5deg) translateZ(20px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(228, 30, 61, 0.4);
+            background: rgba(245, 245, 245, 0.95);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            animation: bounceIn3D 1s;
+            transform: translateZ(30px); /* 3D depth for title */
+        }
+
+        @keyframes bounceIn3D {
+            0% { transform: scale(0.8) translateZ(-50px); opacity: 0; }
+            50% { transform: scale(1.1) translateZ(20px); opacity: 0.8; }
+            100% { transform: scale(1) translateZ(30px); opacity: 1; }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transform: translateZ(20px); /* 3D depth for form */
+        }
+
+        label {
+            font-size: 1rem; /* Smaller centered text */
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 5px;
+            transition: color 0.3s, transform 0.3s;
+            transform: translateZ(10px); /* 3D depth for labels */
+        }
+
+        label:hover {
+            color: var(--primary-color);
+            transform: scale(1.05) translateZ(15px);
+        }
+
+        input, textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem; /* Smaller centered text */
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+            transform: translateZ(10px); /* 3D depth for inputs */
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(228, 30, 61, 0.5);
+            transform: scale(1.02) translateZ(15px);
+            outline: none;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            background: var(--gradient-bg) !important;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s, box-shadow 0.3s, text-shadow 0.3s, rotate 0.3s;
+            transform: translateZ(30px); /* 3D depth for button */
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, var(--hover-color), #ff2d2d) !important;
+            transform: scale(1.15) rotateY(20deg) translateZ(40px);
+            box-shadow: 0 15px 35px rgba(228, 30, 61, 0.7), 0 0 25px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        }
+
+        .alert {
+            margin: 20px auto;
+            max-width: 500px;
+            border-radius: 12px;
+            animation: bounceIn 0.5s;
+            transform: translateZ(20px); /* 3D depth for alert */
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.8) translateZ(0); opacity: 0; }
+            50% { transform: scale(1.1) translateZ(20px); opacity: 0.8; }
+            100% { transform: scale(1) translateZ(20px); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            label, input, button {
+                font-size: 0.9rem;
+            }
+
+            button {
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Loader Section -->
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <% if(messages && messages.length){ %>
+        <div class="alert alert-success alert-dismissible fade show animate_animated animate_bounceIn" role="alert">
+            <%= messages %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <% } %>
+
+    <div class="container w-50 mt-3 animate_animated animate_fadeInUp">
+        <h2>Donor Registration</h2>
+        <form action="/donour" method="post">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="fname" required>
+
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="lname" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="animate_animated animate_pulse">Register</button>
+        </form>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Initialize Particle.js Background
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#e41e3d", "#ff6b6b", "#d11932"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.6, "random": true, "anim": { "enable": true, "speed": 1.5, "opacity_min": 0.1 } },
+                "size": { "value": 4, "random": true, "anim": { "enable": true, "speed": 2.5 } },
+                "line_linked": { "enable": true, "distance": 150, "color": "#e41e3d", "opacity": 0.5, "width": 1.5 },
+                "move": { "enable": true, "speed": 3, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "repulse": { "distance": 120, "duration": 0.5 } }
+            }
+        });
+
+        // Hide loader after 2 seconds
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<span style="font-family: verdana, geneva, sans-serif;">
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title> Dashboard | BloodMate</title>
+
+    
+    <style>
+    
+    
+
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        outline: none;
+        border: none;
+        text-decoration: none;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: rgb(226, 226, 226);
+      }
+
+      nav {
+        position: sticky;
+        top: 0;
+        bottom: 0;
+        height: 100vh;
+        left: 0;
+        width: 90px;
+        /* width: 280px; */
+        background: #fff;
+        overflow: hidden;
+        transition: 1s;
+      }
+
+      nav:hover {
+        width: 280px;
+        transition: 1s;
+      }
+
+      .logo {
+        text-align: center;
+        display: flex;
+        margin: 10px 0 0 10px;
+        padding-bottom: 3rem;
+      }
+
+      .logo img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+      }
+
+      .logo span {
+        font-weight: bold;
+        padding-left: 15px;
+        font-size: 18px;
+        text-transform: uppercase;
+      }
+
+      a {
+        position: relative;
+        width: 280px;
+        font-size: 14px;
+        color: rgb(85, 83, 83);
+        display: table;
+        padding: 10px;
+      }
+
+      nav .fas {
+        position: relative;
+        width: 70px;
+        height: 40px;
+        top: 20px;
+        font-size: 20px;
+        text-align: center;
+      }
+
+      .nav-item {
+        position: relative;
+        top: 12px;
+        margin-left: 10px;
+      }
+
+      a:hover {
+        background: #eee;
+      }
+
+      a:hover i {
+        color: #d64141;
+        transition: 0.5s;
+      }
+
+      .logout {
+        position: absolute;
+        bottom: 0;
+      }
+
+      .container {
+        display: flex;
+      }
+
+      /* MAin Section */
+      .main {
+        position: relative;
+        padding: 20px;
+        width: 100%;
+      }
+
+      .main-top {
+        display: flex;
+        width: 100%;
+      }
+
+      .main-top i {
+        position: absolute;
+        right: 0;
+        margin: 10px 30px;
+        color: rgb(110, 109, 109);
+        cursor: pointer;
+      }
+
+      .main .users {
+        display: flex;
+        width: 100%;
+      }
+
+      .users .card {
+        width: 25%;
+        margin: 10px;
+        background: #d26c6c;
+        text-align: center;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      .users .card img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+      }
+
+      .users .card h4 {
+        text-transform: uppercase;
+      }
+
+      .users .card p {
+        font-size: 12px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+      }
+
+      .users table {
+        margin: auto;
+      }
+
+      .users .per span {
+        padding: 5px;
+        border-radius: 10px;
+        background: rgb(223, 223, 223);
+      }
+
+      .users td {
+        font-size: 14px;
+        padding-right: 15px;
+      }
+
+      .users .card button {
+        width: 100%;
+        margin-top: 8px;
+        padding: 7px;
+        cursor: pointer;
+        border-radius: 10px;
+        background: transparent;
+        border: 1px solid #52b3d6;
+      }
+
+      .users .card button:hover {
+        background: #4ac8d4;
+        color: #fff;
+        transition: 0.5s;
+      }
+
+      /*list List serction  */
+      .list {
+        margin-top: 20px;
+        text-transform: capitalize;
+      }
+
+      .blood-list {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+      }
+
+      .table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 15px;
+        min-width: 100%;
+        overflow: hidden;
+        border-radius: 5px 5px 0 0;
+      }
+
+      table thead tr {
+        color: #fff;
+        background: #d55f5f;
+        text-align: left;
+        font-weight: bold;
+      }
+
+      .table th,
+      .table td {
+        padding: 12px 15px;
+      }
+
+      .table tbody tr {
+        border-bottom: 1px solid #ddd;
+      }
+
+      .table tbody tr:nth-of-type(odd) {
+        background: #f3f3f3;
+      }
+
+      .table tbody tr.active {
+        font-weight: bold;
+        color: #d64141;
+      }
+
+      .table tbody tr:last-of-type {
+        border-bottom: 2px solid #d44a4a;
+      }
+
+      .table button {
+        padding: 6px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        background: transparent;
+        border: 1px solid #d44a4a;
+      }
+
+      .table button:hover {
+        background: #d44a4a;
+        color: #fff;
+        transition: 0.5rem;
+      }
+
+
+      /* Modal and Overlay */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 100;
+      }
+
+      .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+        z-index: 101;
+        width: 300px;
+      }
+
+      .modal h3 {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .modal label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .modal input,
+      .modal select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .modal button {
+        width: 100%;
+        padding: 10px;
+        background-color: #52b3d6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .modal button:hover {
+        background-color: #52b3d6;
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 25px;
+        cursor: pointer;
+        color: #333;
+      }
+    </style>
+
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <!-- Font Awesome Cdn Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js" ></script>
+    <script src="/socket.io/socket.io.js" ></script>
+    <script defer src="/script.js" ></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="#" class="logo">
+              <img src="BloodPhotos/blood.png">
+              <span class="nav-item">Dashboard</span>
+            </a></li>
+          <li><a href="#">
+              <i class="fas fa-menorah"></i>
+              <span class="nav-item">Dashboard</span>
+            </a></li>
+          <li><a href="#">
+              <i class="fas fa-comment"></i>
+              <span class="nav-item">Blood Requests</span>
+            </a></li>
+          <li><a href="#">
+              <i class="fas fa-database"></i>
+              <span class="nav-item">Notifications</span>
+            </a></li>
+
+          </a></li>
+
+          <li><a href="#" class="logout">
+              <i class="fas fa-sign-out-alt"></i>
+              <span class="nav-item">Log out</span>
+            </a></li>
+        </ul>
+      </nav>
+
+
+      <section class="main">
+        <div class="main-top">
+          <img src="BloodPhotos/logo.png"
+            style="width:150px; height: auto;  margin-left: 10px; mix-blend-mode: multiply; ">
+          <i class="fas fa-user-cog"></i>
+        </div>
+        <div class="users">
+
+
+          <div class="card">
+            <img src="BloodPhotos/A+.png">
+            <h4>A+ Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>85%</span></td>
+                  <td><span>87%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('A+')">Request</button>
+          </div>
+
+          <div class="overlay" id="overlay" onclick="closeModal()"></div>
+
+          <div class="modal" id="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Blood Donation Form</h3>
+            <label>Select Date:</label>
+            <input type="date" id="donationDate"><br><br>
+
+            <label>Blood Group:</label>
+           <input type="text" id="bloodGroup" readonly>
+            <br><br>
+
+            <label>Select Amount (ml):</label>
+            <select id="bloodAmount">
+              <option>250 ml</option>
+              <option>350 ml</option>
+              <option>450 ml</option>
+            </select><br><br>
+
+            <button onclick="submitForm()">Submit</button>
+          </div>
+
+
+
+          <div class="card">
+            <img src="BloodPhotos/A-.png">
+            <h4>A- Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>82%</span></td>
+                  <td><span>85%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('A-')">Request</button>
+          </div>
+
+          <div class="card">
+            <img src="BloodPhotos/B+.png">
+            <h4>B+ Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>94%</span></td>
+                  <td><span>92%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('B+')">Request</button>
+          </div>
+
+
+          <div class="card">
+            <img src="BloodPhotos/B-.png">
+            <h4>B- Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>85%</span></td>
+                  <td><span>82%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('B-')">Request</button>
+          </div>
+
+          <div class="card">
+            <img src="BloodPhotos/O+.png">
+            <h4>O+ Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>82%</span></td>
+                  <td><span>85%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('O+')">Request</button>
+          </div>
+          <div class="card">
+            <img src="BloodPhotos/O-.png">
+            <h4>O- Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>82%</span></td>
+                  <td><span>85%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('O-')">Request</button>
+          </div>
+          <div class="card">
+            <img src="BloodPhotos/AB+.png">
+            <h4>AB+ Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>82%</span></td>
+                  <td><span>85%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('AB+')">Request</button>
+          </div>
+          <div class="card">
+            <img src="BloodPhotos/AB-.png">
+            <h4>AB- Blood Group</h4>
+             
+            <div class="per">
+              <table>
+                <tr>
+                  <td><span>82%</span></td>
+                  <td><span>85%</span></td>
+                </tr>
+                <tr>
+                  <td>Month</td>
+                  <td>Year</td>
+                </tr>
+              </table>
+            </div>
+            <button onclick="openModal('AB-')">Request</button>
+          </div>
+        </div>
+
+        <section class="list">
+          <div class="blood-list">
+            <h1> List</h1>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Blood Group</th>
+                  <th>Quantity</th>
+                  <th>Deadline</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>01</td>
+                  <td>A+</td>
+                  <td>100ml</td>
+                  <td>03-24-22</td>
+
+                </tr>
+                <tr class="active">
+                  <td>02</td>
+                  <td>B+</td>
+                  <td>200ml</td>
+                  <td>03-24-22</td>
+
+                </tr>
+                <tr>
+                  <td>03</td>
+                  <td>O+</td>
+                  <td>200ml</td>
+                  <td>03-24-22</td>
+
+                </tr>
+                <tr>
+                  <td>04</td>
+                  <td>AB-</td>
+                  <td>500ml</td>
+                  <td>03-24-22</td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+</div>
+    <!-- addmap -->
+    <div id="map" style="height: 50vh;"></div>
+  
+    <script>
+        var map = L.map('map').setView([20, 78], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var markers = {};
+        var socket = io();
+
+        socket.on("broadcastLocation", (users) => {
+        for (let id in users) {
+            let user = users[id];
+
+            // If a new user is detected, add a marker
+            if (!markers[id]) {
+                markers[id] = L.marker([user.latitude, user.longitude]).addTo(map)
+                    .bindPopup(`User ${id}`).openPopup();
+            } else {
+                // Update position if user already exists
+                markers[id].setLatLng([user.latitude, user.longitude]);
+            }
+        }
+        for (let id in markers) {
+                if (!users[id]) {
+                    map.removeLayer(markers[id]);
+                    delete markers[id];
+                }
+            }
+    });
+    </script>
+    <!--  -->
+
+    <script src="./script.js"></script>
+    <script>
+      function openModal(bloodGroup) {
+        document.getElementById("modal").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+
+        let bloodGroupField= document.getElementById("bloodGroup");
+        if (bloodGroupField) {
+        bloodGroupField.value = bloodGroup; // Set the text correctly
+    } else {
+        console.error("Blood group input field not found.");
+    }
+
+      }
+      
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+      
+      function submitForm() {
+    let date = document.getElementById("donationDate").value;
+    let bloodGroup = document.getElementById("bloodGroup").value;
+    let amount = document.getElementById("bloodAmount").value;
+
+    let donationData = {
+        donationDate: date,
+        bloodGroup: bloodGroup,
+        bloodAmount: amount,
+    };
+
+    // Send data to localhost:8000/hospital/donation
+    fetch(`http://localhost:<%= port %>/hospital/donation`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(donationData)
+    })
+    .then(response => response.json()) // Convert response to JSON
+    .then(data => {
+        alert(`Response from server: ${JSON.stringify(data)}`);
+        closeModal(); // Close modal only after a successful response
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Failed to send data to the server.");
+    });
+}
+
+    </script>
+
+  </body>
+
+  </html>
+</span>
