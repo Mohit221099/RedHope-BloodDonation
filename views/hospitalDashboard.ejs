@@ -1,16 +1,12 @@
-<span style="font-family: verdana, geneva, sans-serif;">
-  <!DOCTYPE html>
-  <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <title> Dashboard | BloodMate</title>
+    <title>Dashboard | BloodMate</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyFQ3m8BzUafCUwuXvyaDlBXRmuyA5IsQ&libraries=places&geometry" defer></script>
 
-    
     <style>
-    
-    
-
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
       * {
@@ -34,7 +30,6 @@
         height: 100vh;
         left: 0;
         width: 90px;
-        /* width: 280px; */
         background: #fff;
         overflow: hidden;
         transition: 1s;
@@ -107,7 +102,7 @@
         display: flex;
       }
 
-      /* MAin Section */
+      /* Main Section */
       .main {
         position: relative;
         padding: 20px;
@@ -130,16 +125,23 @@
       .main .users {
         display: flex;
         width: 100%;
+        flex-wrap: wrap;
+        gap: 15px;
       }
 
       .users .card {
-        width: 25%;
-        margin: 10px;
+        width: calc(25% - 15px);
+        margin: 10px 0;
         background: #d26c6c;
         text-align: center;
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .users .card:hover {
+        transform: translateY(-5px);
       }
 
       .users .card img {
@@ -150,12 +152,15 @@
 
       .users .card h4 {
         text-transform: uppercase;
+        color: #fff;
+        margin: 10px 0;
       }
 
       .users .card p {
         font-size: 12px;
         margin-bottom: 15px;
         text-transform: uppercase;
+        color: #fff;
       }
 
       .users table {
@@ -165,7 +170,8 @@
       .users .per span {
         padding: 5px;
         border-radius: 10px;
-        background: rgb(223, 223, 223);
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
       }
 
       .users td {
@@ -181,15 +187,16 @@
         border-radius: 10px;
         background: transparent;
         border: 1px solid #52b3d6;
+        color: #fff;
+        transition: background 0.3s ease;
       }
 
       .users .card button:hover {
         background: #4ac8d4;
         color: #fff;
-        transition: 0.5s;
       }
 
-      /*list List serction  */
+      /* List Section */
       .list {
         margin-top: 20px;
         text-transform: capitalize;
@@ -248,14 +255,14 @@
         cursor: pointer;
         background: transparent;
         border: 1px solid #d44a4a;
+        color: #d44a4a;
+        transition: background 0.3s ease, color 0.3s ease;
       }
 
       .table button:hover {
         background: #d44a4a;
         color: #fff;
-        transition: 0.5rem;
       }
-
 
       /* Modal and Overlay */
       .overlay {
@@ -280,17 +287,20 @@
         display: none;
         z-index: 101;
         width: 300px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       }
 
       .modal h3 {
         font-size: 18px;
         text-align: center;
         margin-bottom: 20px;
+        color: #333;
       }
 
       .modal label {
         display: block;
         margin-bottom: 5px;
+        color: #555;
       }
 
       .modal input,
@@ -300,6 +310,7 @@
         margin-bottom: 15px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        font-size: 14px;
       }
 
       .modal button {
@@ -310,10 +321,11 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        transition: background 0.3s ease;
       }
 
       .modal button:hover {
-        background-color: #52b3d6;
+        background-color: #4ac8d4;
       }
 
       .close {
@@ -323,370 +335,548 @@
         font-size: 25px;
         cursor: pointer;
         color: #333;
+        transition: color 0.3s ease;
+      }
+
+      .close:hover {
+        color: #d64141;
+      }
+
+      /* Blood Bank Finder Section */
+      .blood-bank-finder {
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+
+      .blood-bank-finder h2 {
+        color: #d55f5f;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .radius-slider {
+        width: 80%;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .radius-slider label {
+        font-size: 16px;
+        color: #555;
+        white-space: nowrap;
+      }
+
+      .radius-slider input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: #ddd;
+        outline: none;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+
+      .radius-slider input[type="range"]:hover {
+        opacity: 1;
+      }
+
+      .radius-slider input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #d55f5f;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .radius-slider input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+      }
+
+      #map {
+        height: 400px;
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .blood-bank-list {
+        margin-top: 20px;
+        max-height: 200px;
+        overflow-y: auto;
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .blood-bank-list ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .blood-bank-list li {
+        padding: 10px;
+        color: #333;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .blood-bank-list li:hover {
+        background: #f0f0f0;
+        transition: background 0.3s ease;
       }
     </style>
 
-    <!-- <link rel="stylesheet" href="style.css" /> -->
     <!-- Font Awesome Cdn Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Google Maps API with EJS for API Key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.Google_Map_API_Key %>&libraries=places&geometry" defer></script>
+    <!-- Commenting out Leaflet for now to avoid conflicts -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script> -->
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js" ></script>
-    <script src="/socket.io/socket.io.js" ></script>
-    <script defer src="/script.js" ></script>
-  </head>
+    <script defer src="/script.js"></script>
+</head>
 
-  <body>
+<body>
     <div class="container">
-      <nav>
-        <ul>
-          <li><a href="#" class="logo">
-              <img src="BloodPhotos/blood.png">
-              <span class="nav-item">Dashboard</span>
-            </a></li>
-          <li><a href="#">
-              <i class="fas fa-menorah"></i>
-              <span class="nav-item">Dashboard</span>
-            </a></li>
-          <li><a href="#">
-              <i class="fas fa-comment"></i>
-              <span class="nav-item">Blood Requests</span>
-            </a></li>
-          <li><a href="#">
-              <i class="fas fa-database"></i>
-              <span class="nav-item">Notifications</span>
-            </a></li>
+        <nav>
+            <ul>
+                <li><a href="#" class="logo">
+                    <img src="BloodPhotos/blood.png">
+                    <span class="nav-item">Dashboard</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="fas fa-menorah"></i>
+                    <span class="nav-item">Dashboard</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="fas fa-comment"></i>
+                    <span class="nav-item">Blood Requests</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="fas fa-database"></i>
+                    <span class="nav-item">Notifications</span>
+                </a></li>
+                <li><a href="#" class="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-item">Log out</span>
+                </a></li>
+            </ul>
+        </nav>
 
-          </a></li>
-
-          <li><a href="#" class="logout">
-              <i class="fas fa-sign-out-alt"></i>
-              <span class="nav-item">Log out</span>
-            </a></li>
-        </ul>
-      </nav>
-
-
-      <section class="main">
-        <div class="main-top">
-          <img src="BloodPhotos/logo.png"
-            style="width:150px; height: auto;  margin-left: 10px; mix-blend-mode: multiply; ">
-          <i class="fas fa-user-cog"></i>
-        </div>
-        <div class="users">
-
-
-          <div class="card">
-            <img src="BloodPhotos/A+.png">
-            <h4>A+ Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>85%</span></td>
-                  <td><span>87%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
+        <section class="main">
+            <div class="main-top">
+                <img src="BloodPhotos/logo.png" style="width:150px; height: auto; margin-left: 10px; mix-blend-mode: multiply;">
+                <i class="fas fa-user-cog"></i>
             </div>
-            <button onclick="openModal('A+')">Request</button>
-          </div>
-
-          <div class="overlay" id="overlay" onclick="closeModal()"></div>
-
-          <div class="modal" id="modal">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Blood Donation Form</h3>
-            <label>Select Date:</label>
-            <input type="date" id="donationDate"><br><br>
-
-            <label>Blood Group:</label>
-           <input type="text" id="bloodGroup" readonly>
-            <br><br>
-
-            <label>Select Amount (ml):</label>
-            <select id="bloodAmount">
-              <option>250 ml</option>
-              <option>350 ml</option>
-              <option>450 ml</option>
-            </select><br><br>
-
-            <button onclick="submitForm()">Submit</button>
-          </div>
-
-
-
-          <div class="card">
-            <img src="BloodPhotos/A-.png">
-            <h4>A- Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>82%</span></td>
-                  <td><span>85%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
+            <div class="users">
+                <div class="card">
+                    <img src="BloodPhotos/A+.png">
+                    <h4>A+ Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>85%</span></td>
+                                <td><span>87%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('A+')">Request</button>
+                </div>
+                <div class="card">
+                    <img src="BloodPhotos/A-.png">
+                    <h4>A- Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>82%</span></td>
+                                <td><span>85%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('A-')">Request</button>
+                </div>
+                <div class="card">
+                    <img src="BloodPhotos/B+.png">
+                    <h4>B+ Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>94%</span></td>
+                                <td><span>92%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('B+')">Request</button>
+                </div>
+                <div class="card">
+                    <img src="BloodPhotos/B-.png">
+                    <h4>B- Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>85%</span></td>
+                                <td><span>82%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('B-')">Request</button>
+                </div>
+                <div class="card">
+                    <img src="BloodPhotos/O+.png">
+                    <h4>O+ Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>82%</span></td>
+                                <td><span>85%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('O+')">Request</button>
+                </div>
+                <div class="card">
+                    <img src="BloodPhotos/O-.png">
+                    <h4>O- Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>82%</span></td>
+                                <td><span>85%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('O-')">Request</button>
+                </div>
+                <div class="card">
+                    <img src="BloodPhotos/AB+.png">
+                    <h4>AB+ Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>82%</span></td>
+                                <td><span>85%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('AB+')">Request</button>
+                </div>
+                <div class="card">
+                    <img src="BloodPhotos/AB-.png">
+                    <h4>AB- Blood Group</h4>
+                    <div class="per">
+                        <table>
+                            <tr>
+                                <td><span>82%</span></td>
+                                <td><span>85%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Month</td>
+                                <td>Year</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <button onclick="openModal('AB-')">Request</button>
+                </div>
             </div>
-            <button onclick="openModal('A-')">Request</button>
-          </div>
 
-          <div class="card">
-            <img src="BloodPhotos/B+.png">
-            <h4>B+ Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>94%</span></td>
-                  <td><span>92%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
-            </div>
-            <button onclick="openModal('B+')">Request</button>
-          </div>
+            <section class="list">
+                <div class="blood-list">
+                    <h1>List</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Blood Group</th>
+                                <th>Quantity</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>A+</td>
+                                <td>100ml</td>
+                                <td>03-24-22</td>
+                            </tr>
+                            <tr class="active">
+                                <td>02</td>
+                                <td>B+</td>
+                                <td>200ml</td>
+                                <td>03-24-22</td>
+                            </tr>
+                            <tr>
+                                <td>03</td>
+                                <td>O+</td>
+                                <td>200ml</td>
+                                <td>03-24-22</td>
+                            </tr>
+                            <tr>
+                                <td>04</td>
+                                <td>AB-</td>
+                                <td>500ml</td>
+                                <td>03-24-22</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-
-          <div class="card">
-            <img src="BloodPhotos/B-.png">
-            <h4>B- Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>85%</span></td>
-                  <td><span>82%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
-            </div>
-            <button onclick="openModal('B-')">Request</button>
-          </div>
-
-          <div class="card">
-            <img src="BloodPhotos/O+.png">
-            <h4>O+ Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>82%</span></td>
-                  <td><span>85%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
-            </div>
-            <button onclick="openModal('O+')">Request</button>
-          </div>
-          <div class="card">
-            <img src="BloodPhotos/O-.png">
-            <h4>O- Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>82%</span></td>
-                  <td><span>85%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
-            </div>
-            <button onclick="openModal('O-')">Request</button>
-          </div>
-          <div class="card">
-            <img src="BloodPhotos/AB+.png">
-            <h4>AB+ Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>82%</span></td>
-                  <td><span>85%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
-            </div>
-            <button onclick="openModal('AB+')">Request</button>
-          </div>
-          <div class="card">
-            <img src="BloodPhotos/AB-.png">
-            <h4>AB- Blood Group</h4>
-             
-            <div class="per">
-              <table>
-                <tr>
-                  <td><span>82%</span></td>
-                  <td><span>85%</span></td>
-                </tr>
-                <tr>
-                  <td>Month</td>
-                  <td>Year</td>
-                </tr>
-              </table>
-            </div>
-            <button onclick="openModal('AB-')">Request</button>
-          </div>
-        </div>
-
-        <section class="list">
-          <div class="blood-list">
-            <h1> List</h1>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Blood Group</th>
-                  <th>Quantity</th>
-                  <th>Deadline</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>01</td>
-                  <td>A+</td>
-                  <td>100ml</td>
-                  <td>03-24-22</td>
-
-                </tr>
-                <tr class="active">
-                  <td>02</td>
-                  <td>B+</td>
-                  <td>200ml</td>
-                  <td>03-24-22</td>
-
-                </tr>
-                <tr>
-                  <td>03</td>
-                  <td>O+</td>
-                  <td>200ml</td>
-                  <td>03-24-22</td>
-
-                </tr>
-                <tr>
-                  <td>04</td>
-                  <td>AB-</td>
-                  <td>500ml</td>
-                  <td>03-24-22</td>
-
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <!-- Blood Bank Finder Section -->
+            <section class="blood-bank-finder">
+                <h2>Find Nearby Blood Banks</h2>
+                <div class="radius-slider">
+                    <label for="radius">Radius: <span id="radius-value">5</span> km</label>
+                    <input type="range" id="radius" min="1" max="20" value="5" step="1" oninput="updateRadius()">
+                </div>
+                <div id="map"></div>
+                <div class="blood-bank-list">
+                    <ul id="blood-bank-list"></ul>
+                </div>
+            </section>
         </section>
-      </section>
+    </div>
 
-</div>
-    <!-- addmap -->
-    <div id="map" style="height: 50vh;"></div>
-  
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        var map = L.map('map').setView([20, 78], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
 
-        var markers = {};
-        var socket = io();
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                    }, 500);
+                }, 500);
+            }
+        });
 
-        socket.on("broadcastLocation", (users) => {
-        for (let id in users) {
-            let user = users[id];
+        let map;
+        let currentRadius = 5;
+        let currentLocation = { lat: 22.9757, lng: 88.4427 }; // Default to Kalyani, India
 
-            // If a new user is detected, add a marker
-            if (!markers[id]) {
-                markers[id] = L.marker([user.latitude, user.longitude]).addTo(map)
-                    .bindPopup(`User ${id}`).openPopup();
+        function initMap() {
+            console.log('Initializing map with API Key from .env:', '<%= process.env.Google_Map_API_Key %>');
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        currentLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        setupMap();
+                        console.log('Geolocation successful, location:', currentLocation);
+                    },
+                    (error) => {
+                        currentLocation = { lat: 22.9757, lng: 88.4427 };
+                        setupMap();
+                        console.error('Geolocation error:', error);
+                        alert('Geolocation failed. Using default location: Kalyani, India.');
+                    },
+                    { enableHighAccuracy: true }
+                );
             } else {
-                // Update position if user already exists
-                markers[id].setLatLng([user.latitude, user.longitude]);
+                currentLocation = { lat: 22.9757, lng: 88.4427 };
+                setupMap();
+                console.warn('Geolocation not supported. Using default location: Kalyani, India.');
+                alert('Geolocation is not supported. Using default location: Kalyani, India.');
             }
         }
-        for (let id in markers) {
-                if (!users[id]) {
-                    map.removeLayer(markers[id]);
-                    delete markers[id];
-                }
+
+        function setupMap() {
+            console.log('Setting up map with center:', currentLocation);
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: currentLocation,
+                zoom: 12,
+            });
+
+            let debounceTimeout;
+            document.getElementById('radius').addEventListener('input', () => {
+                clearTimeout(debounceTimeout);
+                debounceTimeout = setTimeout(updateRadius, 500);
+            });
+            updateRadius();
+        }
+
+        function updateRadius() {
+            currentRadius = document.getElementById('radius').value;
+            document.getElementById('radius-value').textContent = currentRadius;
+
+            if (map) {
+                map.data.forEach((feature) => {
+                    if (feature.getGeometry().getType() === 'Circle') {
+                        map.data.remove(feature);
+                    }
+                });
+
+                const circle = new google.maps.Circle({
+                    strokeColor: '#d55f5f',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#d55f5f',
+                    fillOpacity: 0.2,
+                    map: map,
+                    center: currentLocation,
+                    radius: currentRadius * 1000,
+                });
+            } else {
+                console.error('Map is not initialized');
             }
-    });
+
+            fetchBloodBanks();
+        }
+
+        function fetchBloodBanks() {
+            const list = document.getElementById('blood-bank-list');
+            list.innerHTML = '<li>Loading...</li>';
+
+            if (!map || !window.google) {
+                console.error('Map or Google Maps API not loaded');
+                list.innerHTML = '<li>Error: Map not initialized.</li>';
+                return;
+            }
+
+            const service = new google.maps.places.PlacesService(map);
+            const request = {
+                location: currentLocation,
+                radius: currentRadius * 1000,
+                type: ['hospital'],
+                keyword: 'blood bank',
+            };
+
+            service.nearbySearch(request, (results, status) => {
+                list.innerHTML = '';
+                if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                    const filteredResults = results
+                        .filter((place) => place.name && (place.name.toLowerCase().includes('blood') || place.name.toLowerCase().includes('bank')))
+                        .map((place) => ({
+                            ...place,
+                            distance: google.maps.geometry.spherical.computeDistanceBetween(
+                                new google.maps.LatLng(currentLocation.lat, currentLocation.lng),
+                                place.geometry.location
+                            ) / 1000,
+                        }))
+                        .sort((a, b) => (a.distance || 0) - (b.distance || 0));
+
+                    if (filteredResults.length > 0) {
+                        filteredResults.forEach((place) => {
+                            const li = document.createElement('li');
+                            li.textContent = `${place.name} - ${place.vicinity || 'Unknown Location'} (${place.distance?.toFixed(1)} km)`;
+                            list.appendChild(li);
+
+                            new google.maps.Marker({
+                                position: place.geometry.location,
+                                map: map,
+                                title: place.name,
+                                icon: {
+                                    path: google.maps.SymbolPath.CIRCLE,
+                                    fillColor: '#ff0000',
+                                    fillOpacity: 0.9,
+                                    strokeWeight: 2,
+                                    strokeColor: '#fff',
+                                    scale: 10,
+                                },
+                            });
+                        });
+                    } else {
+                        list.innerHTML = '<li>No blood banks found within the radius.</li>';
+                    }
+                } else {
+                    console.error('Places API error:', status);
+                    list.innerHTML = `<li>Error fetching blood banks: ${status}. Check console for details.</li>`;
+                }
+            });
+        }
+
+        window.onload = initMap;
+
+        function openModal(bloodGroup) {
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('bloodGroup').value = bloodGroup;
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function submitForm() {
+            let date = document.getElementById('donationDate').value;
+            let bloodGroup = document.getElementById('bloodGroup').value;
+            let amount = document.getElementById('bloodAmount').value;
+
+            let donationData = {
+                donationDate: date,
+                bloodGroup: bloodGroup,
+                bloodAmount: amount,
+            };
+
+            fetch(`http://localhost:<%= port %>/hospital/donation`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(donationData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(`Response from server: ${JSON.stringify(data)}`);
+                closeModal();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to send data to the server.');
+            });
+        }
     </script>
-    <!--  -->
+</body>
 
-    <script src="./script.js"></script>
-    <script>
-      function openModal(bloodGroup) {
-        document.getElementById("modal").style.display = "block";
-        document.getElementById("overlay").style.display = "block";
-
-        let bloodGroupField= document.getElementById("bloodGroup");
-        if (bloodGroupField) {
-        bloodGroupField.value = bloodGroup; // Set the text correctly
-    } else {
-        console.error("Blood group input field not found.");
-    }
-
-      }
-      
-      function closeModal() {
-        document.getElementById("modal").style.display = "none";
-        document.getElementById("overlay").style.display = "none";
-      }
-      
-      function submitForm() {
-    let date = document.getElementById("donationDate").value;
-    let bloodGroup = document.getElementById("bloodGroup").value;
-    let amount = document.getElementById("bloodAmount").value;
-
-    let donationData = {
-        donationDate: date,
-        bloodGroup: bloodGroup,
-        bloodAmount: amount,
-    };
-
-    // Send data to localhost:8000/hospital/donation
-    fetch(`http://localhost:<%= port %>/hospital/donation`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(donationData)
-    })
-    .then(response => response.json()) // Convert response to JSON
-    .then(data => {
-        alert(`Response from server: ${JSON.stringify(data)}`);
-        closeModal(); // Close modal only after a successful response
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Failed to send data to the server.");
-    });
-}
-
-    </script>
-
-  </body>
-
-  </html>
-</span>
+</html>
